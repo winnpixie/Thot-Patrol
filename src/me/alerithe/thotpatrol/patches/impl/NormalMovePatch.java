@@ -1,6 +1,7 @@
-package me.alerithe.thotpatrol.patches.impl.movement;
+package me.alerithe.thotpatrol.patches.impl;
 
 import me.alerithe.thotpatrol.patches.Patch;
+import me.alerithe.thotpatrol.utils.Helper;
 import me.alerithe.thotpatrol.utils.MathHelper;
 import me.alerithe.thotpatrol.utils.UserData;
 import org.bukkit.GameMode;
@@ -47,7 +48,11 @@ public class NormalMovePatch extends Patch {
         }
         if (!this.getTags().isEmpty()) {
             this.alertOnline(player);
+            if (this.getTags().contains("obscured_head")) {
+                Helper.kickPlayerGeneric(player);
+            }
             this.getTags().clear();
         }
+
     }
 }

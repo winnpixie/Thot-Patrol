@@ -1,13 +1,13 @@
-package me.alerithe.thotpatrol.patches.impl.movement;
+package me.alerithe.thotpatrol.patches.impl;
 
 import me.alerithe.thotpatrol.patches.Patch;
+import me.alerithe.thotpatrol.utils.Helper;
 import me.alerithe.thotpatrol.utils.UserData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-// TODO: Buggy check
 public class NoFallPatch extends Patch {
 
     public NoFallPatch() {
@@ -17,10 +17,9 @@ public class NoFallPatch extends Patch {
     @EventHandler
     private void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        boolean cancel = false;
-        UserData userData = UserData.userDataMap.getOrDefault(player.getUniqueId().toString(), new UserData(player));
-        // do i really care if they're beneath the ground no i could honestly care less because they're falling to their death anyway
+        // do i really care if they're beneath the void no i could honestly care less because they're falling to their death anyway
         if (event.getTo().getY() > 0) {
+            UserData userData = UserData.userDataMap.getOrDefault(player.getUniqueId().toString(), new UserData(player));
             if (event.getFrom().getY() > event.getTo().getY()) {
                 double dist = event.getFrom().getY() - event.getTo().getY();
                 if ((userData.fallDistance += dist) >= 4 && ((Entity) player).isOnGround()) {
@@ -37,6 +36,7 @@ public class NoFallPatch extends Patch {
         if (!this.getTags().isEmpty()) {
             this.alertOnline(player);
             this.getTags().clear();
+            Helper.kickPlayerGeneric(player);
         }
     }
 }

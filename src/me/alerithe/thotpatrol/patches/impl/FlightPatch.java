@@ -1,6 +1,7 @@
-package me.alerithe.thotpatrol.patches.impl.movement;
+package me.alerithe.thotpatrol.patches.impl;
 
 import me.alerithe.thotpatrol.patches.Patch;
+import me.alerithe.thotpatrol.utils.Helper;
 import me.alerithe.thotpatrol.utils.UserData;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import java.util.Arrays;
 import java.util.List;
 
+// TODO: Buggy check
 public class FlightPatch extends Patch {
     public FlightPatch() {
         super("SURVIVAL_FLIGHT");
@@ -36,7 +38,7 @@ public class FlightPatch extends Patch {
                 }
                 if (airBlocks == 9) {
                     userData.flightVL++;
-                    if (userData.flightVL >= 5) {
+                    if (userData.flightVL >= 10) {
                         this.getTags().add("not_falling");
                         cancel = true;
                     }
@@ -52,6 +54,9 @@ public class FlightPatch extends Patch {
         if (!this.getTags().isEmpty()) {
             this.alertOnline(player);
             this.getTags().clear();
+        }
+        if (cancel) {
+            Helper.kickPlayerGeneric(player);
         }
     }
 }

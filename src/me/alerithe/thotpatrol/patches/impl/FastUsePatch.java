@@ -1,4 +1,4 @@
-package me.alerithe.thotpatrol.patches.impl.movement;
+package me.alerithe.thotpatrol.patches.impl;
 
 import me.alerithe.thotpatrol.patches.Patch;
 import me.alerithe.thotpatrol.utils.UserData;
