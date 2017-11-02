@@ -28,9 +28,15 @@ public class ThotPatrol extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         this.channelListenerManager = new ChannelListenerManager();
-        this.channelListenerManager.getChannelListeners().forEach(cl -> this.getServer().getMessenger().registerIncomingPluginChannel(this, cl.getPluginChannel(), cl));
+        this.channelListenerManager.getChannelListeners().forEach(cl -> {
+            this.getServer().getMessenger().registerIncomingPluginChannel(this, cl.getPluginChannel(), cl);
+            this.getLogger().info(String.format("Channel listener loaded for: %s", cl.getPluginChannel()));
+        });
         this.patchManager = new PatchManager();
-        this.patchManager.getPatches().forEach(p -> this.getServer().getPluginManager().registerEvents(p, this));
+        this.patchManager.getPatches().forEach(p -> {
+            this.getServer().getPluginManager().registerEvents(p, this);
+            this.getLogger().info(String.format("Patch loaded: %s", p.getLabel()));
+        });
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getPluginCommand("thotpatrol").setExecutor(new CommandThotPatrol());
     }

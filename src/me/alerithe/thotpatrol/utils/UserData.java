@@ -11,12 +11,14 @@ public class UserData {
     public long itemUseTime;
     public int flightVL;
     public int nofallVL;
+    public boolean isConsumingItem;
     public Player player;
 
     public UserData(Player player) {
         this.player = player;
         this.flightVL = 0;
         this.nofallVL = 0;
+        this.isConsumingItem = false;
         this.fallDistance = 0;
         this.itemUseTime = 0;
     }
