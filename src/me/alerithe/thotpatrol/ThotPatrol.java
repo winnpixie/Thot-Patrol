@@ -38,7 +38,7 @@ public class ThotPatrol extends JavaPlugin implements Listener {
             this.getLogger().info(String.format("Patch loaded: %s", p.getLabel()));
         });
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getServer().getPluginCommand("thotpatrol").setExecutor(new CommandThotPatrol());
+        this.getCommand("thotpatrol").setExecutor(new CommandThotPatrol());
     }
 
     @EventHandler
