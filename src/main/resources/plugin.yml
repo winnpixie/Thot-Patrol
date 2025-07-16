@@ -1,9 +1,8 @@
-name: ${name}
-version: ${version}
-description: ${description}
-author: ${author}
-website: ${url}
-main: ${mainClass}
+name: 'ThotPatrol'
+version: ${project.version}
+description: 'Anti-Cheat add-on for Minecraft: Java Edition'
+authors: [ 'Alerithe', 'Hexeption' ]
+main: io.github.alerithe.thotpatrol.ThotPatrolPlugin
 commands:
-    thotpatrol:
-        description: Main command for Thot Patrol
+  thotpatrol:
+    description: Main command for Thot Patrol
