@@ -7,13 +7,20 @@ import org.bukkit.entity.Player;
 
 public class NormalMoveCheck extends Check {
     public NormalMoveCheck(ThotPatrolPlugin plugin) {
-        super(plugin, "NORMAL_MOVE");
+        super("NORMAL_MOVE", plugin);
     }
 
     @Override
     public boolean onPlayerMove(Player player, Location from, Location to) {
-        return !isHeadObscured(player)
-                && (!player.isSprinting() || canSprint(player));
+        if (isHeadObscured(player)) {
+            return false;
+        }
+
+        if (player.isSprinting() && !canSprint(player)) {
+            return false;
+        }
+
+        return true;
     }
 
     private boolean canSprint(Player player) {

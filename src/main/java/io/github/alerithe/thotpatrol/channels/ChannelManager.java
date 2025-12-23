@@ -19,9 +19,9 @@ public class ChannelManager {
     }
 
     public void load() {
-        listeners.forEach(listener -> {
+        for (ChannelListener listener : listeners) {
             plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin, listener.getChannel(), listener);
             plugin.getLogger().info(() -> String.format("Registered channel listener '%s'", listener.getChannel()));
-        });
+        }
     }
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 // FIXME: Buggy
 public class FlightCheck extends Check {
     public FlightCheck(ThotPatrolPlugin plugin) {
-        super(plugin, "SURVIVAL_FLIGHT");
+        super("SURVIVAL_FLIGHT", plugin);
     }
 
     private final Set<Material> nonSolid = new HashSet<>(Arrays.asList(
@@ -27,13 +27,20 @@ public class FlightCheck extends Check {
 
     @Override
     public boolean onPlayerMove(Player player, Location from, Location to) {
-        if (player.getGameMode() == GameMode.SPECTATOR) return true;
-        if (player.isFlying()) return true;
+        if (player.getGameMode() == GameMode.SPECTATOR) {
+            return true;
+        }
+
+        if (player.isFlying()) {
+            return true;
+        }
 
         double yDelta = to.getY() - from.getY();
-        if (yDelta != 0.0) return true;
+        if (yDelta != 0.0) {
+            return true;
+        }
 
-        User user = getPlugin().userManager.get(player);
+        User user = getPlugin().getUserManager().get(player);
 
         int airBelow = 0;
         for (int x = -1; x < 2; x++) {

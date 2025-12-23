@@ -1,22 +1,19 @@
 package io.github.alerithe.thotpatrol.checks;
 
+import io.github.alerithe.spoiler.listeners.BaseEventListener;
 import io.github.alerithe.thotpatrol.ThotPatrolPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Check {
-    private final ThotPatrolPlugin plugin;
+public class Check extends BaseEventListener<ThotPatrolPlugin> {
     private final String label;
 
-    public Check(ThotPatrolPlugin plugin, String label) {
-        this.plugin = plugin;
-        this.label = label;
-    }
+    public Check(String label, ThotPatrolPlugin plugin) {
+        super(plugin);
 
-    public ThotPatrolPlugin getPlugin() {
-        return plugin;
+        this.label = label;
     }
 
     public String getLabel() {
@@ -36,6 +33,10 @@ public class Check {
     }
 
     public boolean onPlayerAttack(Player attacker, Entity victim) {
+        return true;
+    }
+
+    public boolean onPlayerChat(Player player, String message) {
         return true;
     }
 }

@@ -1,43 +1,48 @@
 package io.github.alerithe.thotpatrol;
 
+import io.github.alerithe.spoiler.utilities.TextHelper;
 import io.github.alerithe.thotpatrol.channels.ChannelManager;
 import io.github.alerithe.thotpatrol.checks.CheckManager;
 import io.github.alerithe.thotpatrol.commands.CommandThotPatrol;
+import io.github.alerithe.thotpatrol.listeners.PlayerConnectionListener;
+import io.github.alerithe.thotpatrol.listeners.PlayerEventListener;
 import io.github.alerithe.thotpatrol.users.UserManager;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * A questionable anti-cheat [add-on]
  */
-public class ThotPatrolPlugin extends JavaPlugin implements Listener {
-    public final String chatPrefix = "\247cT\2474P\247r:";
+public class ThotPatrolPlugin extends JavaPlugin {
+    private final String chatPrefix = TextHelper.formatAmp("&4T&cP&8:&r");
 
-    public final UserManager userManager = new UserManager();
-    public final ChannelManager channelManager = new ChannelManager(this);
-    public final CheckManager checkManager = new CheckManager(this);
+    private final UserManager userManager = new UserManager();
+    private final ChannelManager channelManager = new ChannelManager(this);
+    private final CheckManager checkManager = new CheckManager(this);
 
     @Override
     public void onEnable() {
         channelManager.load();
         checkManager.load();
 
-        this.getServer().getPluginManager().registerEvents(this, this);
+        new PlayerConnectionListener(this).register();
+        new PlayerEventListener(this).register();
 
-        this.getCommand("thotpatrol").setExecutor(new CommandThotPatrol(this));
+        new CommandThotPatrol(this).register();
     }
 
-
-    @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent event) {
-        userManager.add(event.getPlayer());
+    public String getChatPrefix() {
+        return chatPrefix;
     }
 
-    @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event) {
-        userManager.remove(event.getPlayer());
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public ChannelManager getChannelManager() {
+        return channelManager;
+    }
+
+    public CheckManager getCheckManager() {
+        return checkManager;
     }
 }

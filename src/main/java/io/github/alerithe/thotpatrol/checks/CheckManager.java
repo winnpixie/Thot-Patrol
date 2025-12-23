@@ -2,6 +2,7 @@ package io.github.alerithe.thotpatrol.checks;
 
 import io.github.alerithe.thotpatrol.ThotPatrolPlugin;
 import io.github.alerithe.thotpatrol.checks.impl.*;
+import io.github.alerithe.thotpatrol.listeners.PlayerEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,5 @@ public class CheckManager {
         checks.add(new FlightCheck(plugin));
         checks.add(new NormalMoveCheck(plugin));
         checks.add(new NoFallCheck(plugin));
-
-        plugin.getServer().getPluginManager().registerEvents(new PlayerEventListener(plugin), plugin);
     }
 }

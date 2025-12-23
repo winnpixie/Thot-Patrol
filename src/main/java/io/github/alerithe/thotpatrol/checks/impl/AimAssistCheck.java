@@ -12,14 +12,17 @@ import org.bukkit.entity.Player;
  */
 public class AimAssistCheck extends Check {
     public AimAssistCheck(ThotPatrolPlugin plugin) {
-        super(plugin, "AIM_ASSIST");
+        super("AIM_ASSIST", plugin);
     }
 
     @Override
     public boolean onPlayerAttack(Player attacker, Entity victim) {
-        if (!(victim instanceof LivingEntity)) return true;
+        if (!(victim instanceof LivingEntity)) {
+            return true;
+        }
 
         float[] rotations = this.getRotations(attacker, (LivingEntity) victim);
+
         if (attacker.getLocation().getYaw() == rotations[0]
                 && attacker.getLocation().getPitch() == rotations[1]) {
             return false;
@@ -28,6 +31,7 @@ public class AimAssistCheck extends Check {
         return true;
     }
 
+    // TODO: Fundamentally messed up, poorly ported from ModCoderPack's EntityLiving#faceEntity
     private float[] getRotations(Player attacker, LivingEntity victim) {
         Location startLoc = attacker.getLocation();
         Location endLoc = victim.getLocation();
@@ -36,7 +40,7 @@ public class AimAssistCheck extends Check {
         double deltaY = (endLoc.getY() + victim.getEyeHeight()) - (startLoc.getY() + attacker.getEyeHeight());
         double deltaZ = endLoc.getZ() - startLoc.getZ();
 
-        return new float[]{(float) (Math.atan2(deltaZ, deltaX) * 180.0 / Math.PI) - 90f,
-                (float) (-Math.atan2(deltaY, Math.hypot(deltaX, deltaZ)) * 180.0 / Math.PI)};
+        return new float[]{(float) ((Math.atan2(deltaZ, deltaX) * (180.0 / Math.PI)) - 90.0),
+                (float) (-Math.atan2(deltaY, Math.hypot(deltaX, deltaZ)) * (180.0 / Math.PI))};
     }
 }

@@ -1,4 +1,4 @@
-package io.github.alerithe.thotpatrol.utilities;
+package io.github.alerithe.spoiler.utilities;
 
 public class MathHelper {
     private MathHelper() {

@@ -1,7 +1,8 @@
-package io.github.winnpixie.spigoteer.commands;
+package io.github.alerithe.spoiler.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,20 +10,28 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class BaseCommand<P extends JavaPlugin> implements TabExecutor {
-    private final P plugin;
     private final String name;
+    private final P plugin;
 
-    public BaseCommand(P plugin, String name) {
-        this.plugin = plugin;
+    public BaseCommand(String name, P plugin) {
         this.name = name;
+        this.plugin = plugin;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public P getPlugin() {
         return plugin;
     }
 
-    public String getName() {
-        return name;
+    public boolean register() {
+        PluginCommand command = plugin.getCommand(name);
+        if (command == null) return false;
+
+        command.setExecutor(this);
+        return true;
     }
 
     @Override
