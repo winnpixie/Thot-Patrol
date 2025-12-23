@@ -1,4 +1,17 @@
-.idea/
-ThotPatrol.iml
-build/
+# Maven
+.mvn/
 target/
+
+# Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
